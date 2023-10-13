@@ -1,6 +1,7 @@
 import  express  from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
+import userRouter from './routes/user.route.js'
 dotenv.config();
 const app=express();
 //1st way
@@ -28,4 +29,10 @@ mongoose.connect(process.env.URL)
 app.listen(3000,()=>
 {
     console.log("server is listening")
-})
+});
+
+//not the best practice create by express.Router()
+// app.get('/',(req,res)=>{
+//     res.json({message:"hello World!"})
+// })
+app.use('/api/user',userRouter);
