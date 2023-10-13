@@ -1,9 +1,14 @@
 import  express  from "express";
 import mongoose from "mongoose";
+import authRouter from './routes/auth.route.js'
 import dotenv from 'dotenv'
 import userRouter from './routes/user.route.js'
 dotenv.config();
 const app=express();
+//to req a json data as a input
+//we use middleware
+app.use(express.json())
+
 //1st way
 // const MONGO_URL = process.env.URL;
 // const connectdb = async (MONGO_URL)=>{
@@ -26,7 +31,7 @@ mongoose.connect(process.env.URL)
 
 
 
-app.listen(3000,()=>
+app.listen(4000,()=>
 {
     console.log("server is listening")
 });
@@ -36,3 +41,4 @@ app.listen(3000,()=>
 //     res.json({message:"hello World!"})
 // })
 app.use('/api/user',userRouter);
+app.use('/api/auth',authRouter)
