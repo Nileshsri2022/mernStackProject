@@ -7,7 +7,7 @@ dotenv.config();
 const app=express();
 //to req a json data as a input
 //we use middleware
-app.use(express.json())
+app.use(express.json());
 
 //1st way
 // const MONGO_URL = process.env.URL;
@@ -41,4 +41,17 @@ app.listen(4000,()=>
 //     res.json({message:"hello World!"})
 // })
 app.use('/api/user',userRouter);
-app.use('/api/auth',authRouter)
+app.use('/api/auth',authRouter);
+
+
+//middleware to handle errors
+//to use it in the auth pass next
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode ||500;
+    const message=err.message || 'Internal error message'
+    return res.status(statusCode).json({
+        success:false,
+        statusCode,
+        message,
+    });
+});
